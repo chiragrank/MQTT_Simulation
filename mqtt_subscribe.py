@@ -30,7 +30,7 @@ def subscribe(client: mqtt_client, topic_list):
 def run():
     broker = "127.0.0.1"
     port = 1883
-    topic_list = ["python/mqtt", "java/mqtt"]
+    topic_list = ["agent/ac/threat_room_coordination", "agent/ac/belief_diff", "agent/ac/threat_room_communication", "agent/ac/victim_type_communication"]
     client_id = f"python-mqtt-{random.randint(0, 100)}"
 
     client = connect_mqtt(client_id, broker, port)

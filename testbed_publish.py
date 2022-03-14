@@ -40,21 +40,25 @@ def publish(client, topic_msg_list, sleep_time):
     # while True:
     for idx, msg in enumerate(topic_msg_list):
         time.sleep(sleep_time)
+
         try:
             topic = msg["topic"]
+
         except:
             print("No topic found")
             topic = "error/absent_topic"
+            print(msg)
         result = client.publish(topic, json.dumps(msg).encode("utf-8"))
         status = result[0]
         if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
+            # print(f"Send msg idx `{idx}` to topic `{topic}`")
+            pass
         else:
             print(f"Failed to send message to topic {topic}")
 
 
 def run():
-    sleep_time = 0.5
+    sleep_time = 0.01
     broker = "127.0.0.1"
     port = 1883
     client_id = f"python-mqtt-{random.randint(0, 1000)}"
@@ -64,10 +68,10 @@ def run():
         data_list = f.readlines()
     topic_msg_list = [json.loads(l) for l in data_list]
 
-    print(f"Len of the list if {len(topic_msg_list)}")
-    print(f"First message is {topic_msg_list[1]}")
-    print(f"type :{type(topic_msg_list[0])}")
-    print(f"msg_keys: {topic_msg_list[1].keys()}")
+    # print(f"Len of the list if {len(topic_msg_list)}")
+    # print(f"First message is {topic_msg_list[1]}")
+    # print(f"type :{type(topic_msg_list[0])}")
+    # print(f"msg_keys: {topic_msg_list[1].keys()}")
     client = connect_mqtt(client_id, broker, port)
     client.loop_start()
     publish(client, topic_msg_list, sleep_time)
